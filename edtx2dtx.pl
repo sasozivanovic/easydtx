@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# The files belonging to this work and covered by LPPL are listed in
+# The files belonging to this program and covered by GPL are listed in
 # <texmf>/doc/support/easydtx/FILES.
 
 use strict;
