@@ -7,7 +7,7 @@ DAY = 10
 FORMAT = support
 
 SCRIPTS = edtx2dtx.pl
-DOC = easydoctex-mode.el
+DOC = easydoctex-mode.el $(MAN:%=%.md)
 MAN = edtx2dtx.1
 
 README = README.md
