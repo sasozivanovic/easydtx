@@ -38,6 +38,7 @@ my $begin_macrocode = '^%    \\\\begin{macrocode}';
 my $end_macrocode = '%    \\\\end{macrocode}';
 my $Begin_macrocode = '';
 my $End_macrocode = '';
+my $strip = '';
 
 Getopt::Long::Configure (qw/bundling/);
 GetOptions(
@@ -46,6 +47,7 @@ GetOptions(
     "end-macrocode|e=s"  => \$end_macrocode,
     "Begin-macrocode|B=s"  => \$Begin_macrocode,
     "End-macrocode|E=s"  => \$End_macrocode,
+    "strip-empty|s"  => \$strip,
     "help|h|?"  => \$help,
     "version|V"  => \$print_version,
     ) or die $usage;
@@ -73,45 +75,54 @@ sub convert_comments { s/^\Q$comment\E+// && print('%' x length($&)); }
 my $indoc;
 sub process_edtx {
     my $done;
+    my $empty;
     while (<>) {
 	if (/$end_macrocode/) { # trailer starts here
 	    if ($keep_end_macrocode) {
 		$done = 1;
 	    } else {
-		end_macrocode unless ($indoc);
+		end_macrocode unless $indoc;
 		last;
 	    }
 	} elsif (/$begin_macrocode/) {
 	    die "Nested '$begin_macrocode'";
 	}
 	if (/^ *(\Q$comment$comment\E+)/) { # code: multiple comments
-	    begin_macrocode if ($indoc);
+	    begin_macrocode if $indoc;
+	    print($empty); $empty = '';
 	    print;
 	    $indoc = 0;
 	} elsif (/^\Q$comment\E(<[^>]*>)(.*)$/) { # code: unindented guard
-	    begin_macrocode if ($indoc);
+	    begin_macrocode if $indoc;
 	    print;
 	    $indoc = 0;
 	} elsif (/^( *)\Q$comment\E(<[^>]*>) *(.*)$/) { # code: indented guard
-	    begin_macrocode if ($indoc);
+	    begin_macrocode if $indoc;
 	    print("%$2$1$3\n");
 	    $indoc = 0;
 	} elsif (/^\Q$comment\E *(.*)$/) { # doc: unindented comment
-	    end_macrocode unless ($indoc);
+	    end_macrocode unless $indoc;
 	    convert_comments;
 	    print;
 	    $indoc = 1;
 	} elsif (/^( ?)( *)\Q$comment\E *(.*)$/) { # doc: indented comment
-	    end_macrocode unless ($indoc);
+	    end_macrocode unless $indoc;
 	    print "%$2$3\n";
 	    $indoc = 1;
+	} elsif (/^\s*$/) { # code: empty line
+	    if ($strip) {
+		$empty .= $_ unless $indoc;
+	    } else {
+		print;
+	    }
 	} else { # code
-	    begin_macrocode if ($indoc);
+	    print($empty); $empty = '';
+	    begin_macrocode if $indoc;
 	    print;
 	    $indoc = 0;
 	}
 	if ($done) {
-	    end_macrocode unless ($indoc);
+	    end_macrocode unless $indoc;
 	    last;
 	}
     }
