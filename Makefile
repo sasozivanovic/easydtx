@@ -1,8 +1,8 @@
 PACKAGE = easydtx
-VERSION = 0.1.0
-YEAR = 2023
-MONTH = 10
-DAY = 10
+VERSION = 0.2.0
+YEAR = 2024
+MONTH = 11
+DAY = 23
 
 FORMAT = support
 
@@ -12,6 +12,7 @@ MAN = edtx2dtx.1
 
 README = README.md
 LICENCE = LICENCE
+CHANGELOG = CHANGELOG.md
 
 ctan/$(PACKAGE).zip:
 	$(MAKE-TDS)
