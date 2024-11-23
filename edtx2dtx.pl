@@ -40,7 +40,7 @@ my $Begin_macrocode = '';
 my $End_macrocode = '';
 my $strip = '';
 
-Getopt::Long::Configure (qw/bundling/);
+Getopt::Long::Configure (qw/bundling no_ignore_case/);
 GetOptions(
     "comment|c=s"  => \$comment,
     "begin-macrocode|b=s"  => \$begin_macrocode,
