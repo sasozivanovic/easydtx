@@ -2,8 +2,8 @@
 title: edtx2dtx
 section: 1
 header: User Manual
-footer: edtx2dtx 0.1.0
-date: October 10, 2023
+footer: edtx2dtx 0.2.0
+date: November 23, 2024
 hyphenate: false
 ---
 

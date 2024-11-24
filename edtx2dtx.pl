@@ -30,7 +30,7 @@ Usage: edtx2dtx [options] filename.edtx > filename.dtx
 Options: TODO
 END
 
-my $VERSION = '0.1.0';
+my $VERSION = '0.2.0';
 my ($help,  $print_version);
 
 my $comment = '%';

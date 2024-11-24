@@ -1,4 +1,4 @@
-;; easydoctex-mode.el 0.1.0
+;; easydoctex-mode.el 0.2.0
 ;;
 ;; This file is a part of TeX package EasyDTX, available at
 ;; https://ctan.org/pkg/easydtx and https://github.com/sasozivanovic/easydtx.
